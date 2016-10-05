@@ -1,0 +1,2 @@
+class TeamStadium < ApplicationRecord
+end
