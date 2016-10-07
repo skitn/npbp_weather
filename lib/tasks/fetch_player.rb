@@ -7,15 +7,44 @@ class Tasks::FetchPlayer
     def execute
       setup
 
-      urls.each do |url|
-        @session.visit url
+      Team.find_each do |team|
+        @session.visit team.url
         doc = Nokogiri::HTML.parse(@session.html)
+
+        # TODO: 雄大問題の解消
+        # TODO: リファクタリング
         doc.css('table.rosterlisttbl tr.rosterPlayer').each do |tr|
           td = tr.css('td')
 
           no = td[0].inner_text
           player_name = td[1].inner_text
           birthday = td[2].inner_text
+
+          player = Player.find_by(team_id: team.id, name: player_name, birthday: birthday)
+          if player
+            player.uniform_num = no
+            player.active = 1
+            player.save
+          else
+            Player.create(name: player_name, team_id: team.id, uniform_num: no, birthday: birthday, active: 1)
+          end
+        end
+
+        doc.css('table.rosterlisttbl tr.rosterRetire').each do |tr|
+          td = tr.css('td')
+ 
+          no = td[0].inner_text
+          player_name = td[1].inner_text
+          birthday = td[2].inner_text
+
+          player = Player.find_by(team_id: team.id, name: player_name, birthday: birthday)
+          if player
+            player.uniform_num = no
+            player.active = 0
+            player.save
+          else
+            Player.create(name: player_name, team_id: team.id, uniform_num: no, birthday: birthday, active: 0)
+          end
         end
         sleep 3
       end
@@ -34,23 +63,6 @@ class Tasks::FetchPlayer
       }
 
       @session = session
-    end
-
-    def urls
-      [
-        "http://npb.jp/bis/teams/rst_g.html",
-        "http://npb.jp/bis/teams/rst_s.html",
-        "http://npb.jp/bis/teams/rst_t.html",
-        "http://npb.jp/bis/teams/rst_c.html",
-        "http://npb.jp/bis/teams/rst_d.html",
-        "http://npb.jp/bis/teams/rst_db.html",
-        "http://npb.jp/bis/teams/rst_h.html",
-        "http://npb.jp/bis/teams/rst_f.html",
-        "http://npb.jp/bis/teams/rst_m.html",
-        "http://npb.jp/bis/teams/rst_l.html",
-        "http://npb.jp/bis/teams/rst_bs.html",
-        "http://npb.jp/bis/teams/rst_e.html",
-      ]
     end
   end
 end
