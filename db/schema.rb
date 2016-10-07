@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20161005155249) do
   create_table "teams", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name",            null: false
     t.integer  "home_stadiam_id", null: false
+    t.string   "url",             null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
