@@ -16,6 +16,8 @@ gem 'nokogiri'
 gem 'capybara'
 gem 'poltergeist'
 
+gem 'dotenv-rails', '~> 2.0.1'
+
 group :development, :test do
   gem 'byebug', platform: :mri
 
