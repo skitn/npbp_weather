@@ -4,7 +4,9 @@ class CreatePlayers < ActiveRecord::Migration[5.0]
       t.integer :team_id
       t.string :name
       t.string :uniform_num
-      t.date :birthday
+      t.integer :birth_year
+      t.integer :birth_month
+      t.integer :birth_day
       t.boolean :active
 
       t.timestamps

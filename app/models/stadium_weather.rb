@@ -1,0 +1,2 @@
+class StadiumWeather < ApplicationRecord
+end

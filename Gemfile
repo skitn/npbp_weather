@@ -17,6 +17,7 @@ gem 'capybara'
 gem 'poltergeist'
 
 gem 'dotenv-rails', '~> 2.0.1'
+gem 'open-weather', '~> 0.12.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri

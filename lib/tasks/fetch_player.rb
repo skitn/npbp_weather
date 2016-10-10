@@ -18,15 +18,14 @@ class Tasks::FetchPlayer
 
           no = td[0].inner_text
           player_name = td[1].inner_text
-          birthday = td[2].inner_text
-
-          player = Player.find_by(team_id: team.id, name: player_name, birthday: birthday)
+          birthday = td[2].inner_text.split(".")
+          player = Player.find_by(team_id: team.id, name: player_name, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2])
           if player
             player.uniform_num = no
             player.active = 1
             player.save
           else
-            Player.create(name: player_name, team_id: team.id, uniform_num: no, birthday: birthday, active: 1)
+            Player.create(name: player_name, team_id: team.id, uniform_num: no, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2], active: 1)
           end
         end
 
@@ -35,15 +34,15 @@ class Tasks::FetchPlayer
  
           no = td[0].inner_text
           player_name = td[1].inner_text
-          birthday = td[2].inner_text
+          birthday = td[2].inner_text.split(".")
 
-          player = Player.find_by(team_id: team.id, name: player_name, birthday: birthday)
+          player = Player.find_by(team_id: team.id, name: player_name, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2])
           if player
             player.uniform_num = no
             player.active = 0
             player.save
           else
-            Player.create(name: player_name, team_id: team.id, uniform_num: no, birthday: birthday, active: 0)
+            Player.create(name: player_name, team_id: team.id, uniform_num: no, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2], active: 0)
           end
         end
         sleep 3
