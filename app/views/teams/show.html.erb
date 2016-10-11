@@ -1,0 +1,13 @@
+<h1>選手一覧</h1>
+
+<ul>
+  <% @players.each do |player| %>
+  <li>
+    <dl>
+      <dt><%= player.name %></dt>
+      <dd><%= birthday(player) %></dd>
+      <dd></dd>
+    </dl>
+  </li>
+  <% end %>
+</ul>

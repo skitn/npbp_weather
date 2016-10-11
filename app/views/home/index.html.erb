@@ -1,0 +1,7 @@
+<h1>Home#index</h1>
+
+<ul>
+<% @teams.each do |team| %>
+  <li><%= link_to team.name, { :controller => :teams, :action => :show, :id => team.id }  %></li>
+<% end %>
+</ul>
