@@ -7,6 +7,11 @@
       <dt><%= player.name %></dt>
       <dd><%= birthday(player) %></dd>
       <dd><%= player.stadium_weather.weather_name %></dd>
+      <dd>
+        <% unless player.stadium_weather.icon.blank? %>
+          <img src="http://openweathermap.org/img/w/<%= player.stadium_weather.icon %>.png" />
+        <% end %>
+      </dd>
     </dl>
   </li>
   <% end %>
