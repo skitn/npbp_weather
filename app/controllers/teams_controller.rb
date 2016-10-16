@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
   def show
-    @players = Player.where(:team_id => params[:id], :active => true)
+    @players = Player.includes(:stadium_weather).where(:team_id => params[:id], :active => true)
   end
 end

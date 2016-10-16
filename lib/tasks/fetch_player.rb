@@ -18,14 +18,24 @@ class Tasks::FetchPlayer
 
           no = td[0].inner_text
           player_name = td[1].inner_text
-          birthday = td[2].inner_text.split(".")
-          player = Player.find_by(team_id: team.id, name: player_name, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2])
+          birthday = td[2].inner_text
+
+          stadium_weather = StadiumWeather.find_by(:stadium_id => team.stadium_id, :month => birthday.to_date.month, :day => birthday.to_date.day)
+
+          player = Player.find_by(team_id: team.id, name: player_name, birthday: birthday)
           if player
+            player.stadium_weather_id = stadium_weather.id
             player.uniform_num = no
             player.active = 1
             player.save
           else
-            Player.create(name: player_name, team_id: team.id, uniform_num: no, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2], active: 1)
+            Player.create(
+              team_id: team.id,
+              stadium_weather_id: stadium_weather.id,
+              name: player_name,
+              uniform_num: no,
+              birthday: birthday,
+              active: 1)
           end
         end
 
@@ -34,15 +44,25 @@ class Tasks::FetchPlayer
  
           no = td[0].inner_text
           player_name = td[1].inner_text
-          birthday = td[2].inner_text.split(".")
+          birthday = td[2].inner_text
 
-          player = Player.find_by(team_id: team.id, name: player_name, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2])
+          stadium_weather = StadiumWeather.find_by(:stadium_id => team.stadium_id, :month => birthday.to_date.month, :day => birthday.to_date.day)
+
+          player = Player.find_by(team_id: team.id, name: player_name, birthday: birthday)
+
           if player
+            player.stadium_weather_id = stadium_weather.id
             player.uniform_num = no
             player.active = 0
             player.save
           else
-            Player.create(name: player_name, team_id: team.id, uniform_num: no, birth_year: birthday[0], birth_month: birthday[1], birth_day: birthday[2], active: 0)
+            Player.create(
+              team_id: team.id,
+              stadium_weather_id: stadium_weather.id,
+              name: player_name,
+              uniform_num: no,
+              birthday: birthday,
+              active: 0)
           end
         end
         sleep 3
