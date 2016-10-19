@@ -1,0 +1,15 @@
+<div class="top-bar" id="example-menu">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li class="menu-text"><a href="/">Npbp Weather</a></li>
+      <li>
+        <a href="#">選手一覧</a>
+        <ul class="menu vertical">
+          <% teams.each do |team| %>
+            <li><%= link_to team.name, { :controller => :teams, :action => :show, :id => team.id }  %></li>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
